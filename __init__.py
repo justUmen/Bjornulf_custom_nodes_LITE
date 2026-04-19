@@ -102,7 +102,6 @@ NODE_CLASS_MAPPINGS = {
     "Bjornulf_LoadImageWithTransparencyFromPath": LoadImageWithTransparencyFromPath,
     "Bjornulf_SplitImageGrid": SplitImageGrid,
     "Bjornulf_ReassembleImageGrid": ReassembleImageGrid,
-    "Bjornulf_SaveTmpAudio": SaveTmpAudio,
     "Bjornulf_SaveTmpVideo": SaveTmpVideo,
     "Bjornulf_MathNode": MathNode,
     "Bjornulf_ListSelector": ListSelector,
