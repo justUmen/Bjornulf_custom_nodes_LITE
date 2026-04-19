@@ -52,7 +52,6 @@ from .switches import SwitchText, SwitchAnything
 from .write_pickme_global import WriteTextPickMeGlobal, LoadTextPickMeGlobal
 from .list_selector import ListSelector
 from .math_node import MathNode
-from .save_tmp_audio import SaveTmpAudio
 from .save_tmp_video import SaveTmpVideo
 from .split_image import SplitImageGrid, ReassembleImageGrid
 from .loop_random_seed import LoopRandomSeed
