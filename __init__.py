@@ -16,6 +16,7 @@ from .save_text import SaveText
 from .save_tmp_image import SaveTmpImage, LoadTmpImage
 from .save_img_to_folder import SaveImageToFolder, SaveImageWithTextToFolder
 from .resize_image_percentage import ResizeImagePercentage
+from .resize_image import ResizeImage, ImageResizer, ImageResizerAdvanced, ImageResizerToReference
 from .remove_transparency import RemoveTransparency
 from .image_to_grayscale import GrayscaleTransform
 from .random_line_from_input import RandomLineFromInput
@@ -93,6 +94,9 @@ NODE_CLASS_MAPPINGS = {
     "Bjornulf_WriteImagePickMeGlobalInput": WriteImagePickMeGlobalInput,
     "Bjornulf_LoadImagePickMeGlobal": LoadImagePickMeGlobal,
     "Bjornulf_TextGrep": TextGrep,
+    "Bjornulf_ImageResizer": ImageResizer,
+    "Bjornulf_ImageResizerAdvanced": ImageResizerAdvanced,
+    "Bjornulf_ImageResizerToReference": ImageResizerToReference,
     "Bjornulf_ImageUpscaleWithModelTransparency": ImageUpscaleWithModelTransparency,
     "Bjornulf_loadImageBase64Transparency": loadImageBase64Transparency,
     "Bjornulf_MatchTextToInput": MatchTextToInput,
@@ -154,6 +158,7 @@ NODE_CLASS_MAPPINGS = {
     "Bjornulf_GrayscaleTransform": GrayscaleTransform,
     "Bjornulf_ShowText": ShowText,
     "Bjornulf_SaveText": SaveText,
+    "Bjornulf_ResizeImage": ResizeImage,
     "Bjornulf_ResizeImagePercentage": ResizeImagePercentage,
     "Bjornulf_SaveImageToFolder": SaveImageToFolder,
     "Bjornulf_SaveImageWithTextToFolder": SaveImageWithTextToFolder,
