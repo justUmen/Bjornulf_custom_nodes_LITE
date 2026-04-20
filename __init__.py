@@ -72,6 +72,7 @@ from .pickme_character_lora import WriteCharacterPickMeGlobal, LoadCharacterPick
 from .send_null_same_as_disconnected import ConditionalNull
 from .wait import WaitingNode
 from .audio_fix_2_channels import AudioChannelFixer
+from .run_workflow_API import ApiDynamicTextInputsv2
 
 NODE_CLASS_MAPPINGS = {
     "Bjornulf_AudioChannelFixer": AudioChannelFixer,
@@ -169,7 +170,8 @@ NODE_CLASS_MAPPINGS = {
     "Bjornulf_RandomTexts": RandomTexts,
     "Bjornulf_LoopFloat": LoopFloat,
     "Bjornulf_LoopInteger": LoopInteger,
-    "Bjornulf_LoopBasicBatch": LoopBasicBatch
+    "Bjornulf_LoopBasicBatch": LoopBasicBatch,
+    "Bjornulf_ApiDynamicTextInputsv2": ApiDynamicTextInputsv2
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -290,6 +292,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Bjornulf_FixFace": "[BETA] 🔧🧑 Fix Face",
     "Bjornulf_FaceSettings": "[BETA] 🧑 Face Settings [Fix Face] ⚙",
     "Bjornulf_ApiDynamicTextInputs": "[BETA] 📥🔮📝 Text Manager Api (Execute Workflow)",
+    "Bjornulf_ApiDynamicTextInputsv2": "📥🔮📝 Text Manager Api v2",
     "Bjornulf_ExecuteWorkflowNode": "[BETA] 🔮⚡ Remote Execute Workflow",
     "Bjornulf_LoadCivitAILinks": "📥🕑🤖 Load CivitAI Links",
     "Bjornulf_ReassembleImageGrid": "🖼📹🔨 Reassemble Image/Video Grid",
