@@ -84,17 +84,19 @@ class SaveVideoFFV1:
                 folder = os.path.join(output_dir, custom_path)
             os.makedirs(folder, exist_ok=True)
 
-            # Find the next incremental filename (0001.mkv, 0002.mkv, ...)
-            existing = [f for f in os.listdir(folder) if f.endswith(".mkv")]
+            ext = ".mp4" if create_mp4 else ".mkv"
+            # Find the next incremental filename (0001.mkv/mp4, 0002.mkv/mp4, ...)
+            existing = [f for f in os.listdir(folder) if f.endswith(ext)]
             next_num = 1
             for f in existing:
                 name = os.path.splitext(f)[0]
                 if name.isdigit():
                     next_num = max(next_num, int(name) + 1)
-            video_name = f"{next_num:04d}.mkv"
+            video_name = f"{next_num:04d}{ext}"
             video_path = os.path.join(folder, video_name)
         else:
-            video_name = f"video_{int(time.time() * 1000)}.mkv"
+            ext = ".mp4" if create_mp4 else ".mkv"
+            video_name = f"video_{int(time.time() * 1000)}{ext}"
             video_path = os.path.join(output_dir, video_name)
 
         temp_dir = folder_paths.get_temp_directory()
@@ -133,25 +135,31 @@ class SaveVideoFFV1:
         if audio_path is not None:
             cmd.extend(["-i", audio_path])
 
-        cmd.extend([
-            "-c:v", "ffv1",
-            "-level", "3",
-            "-pix_fmt", "gbrp",  # For RGB lossless via RCT
-        ])
-
-        if audio_path is not None:
-            cmd.extend(["-c:a", "flac"])
+        if create_mp4:
+            # Direct MP4: good quality, reasonable speed
+            cmd.extend([
+                "-c:v", "libx264",
+                "-crf", "18",
+                "-preset", "medium",
+                "-pix_fmt", "yuv420p",
+            ])
+            if audio_path is not None:
+                cmd.extend(["-c:a", "aac", "-b:a", "320k"])
+            else:
+                cmd.extend(["-an"])
+        else:
+            # Lossless FFV1/MKV
+            cmd.extend([
+                "-c:v", "ffv1",
+                "-level", "3",
+                "-pix_fmt", "gbrp",  # For RGB lossless via RCT
+            ])
+            if audio_path is not None:
+                cmd.extend(["-c:a", "flac"])
 
         cmd.append(video_path)
 
         subprocess.run(cmd, check=True)
-
-        # Create smaller "smol" versions from the lossless FFV1 source
-        video_dir = os.path.dirname(video_path)
-        smol_dir = os.path.join(video_dir, "smol")
-        base_name = os.path.splitext(os.path.basename(video_path))[0]
-        if create_mp4:
-            self._create_smol_versions(video_path, smol_dir, base_name, has_audio=(audio_path is not None))
 
         # Clean up temp files
         for frame_path in frame_files:
@@ -159,6 +167,10 @@ class SaveVideoFFV1:
             
         if audio_path is not None and os.path.exists(audio_path):
             os.remove(audio_path)
+
+        video_dir = os.path.dirname(video_path)
+        smol_dir = os.path.join(video_dir, "smol")
+        base_name = os.path.splitext(os.path.basename(video_path))[0]
 
         last_frame = images[-1:].clone()  # Unsqueeze not needed, already [1, H, W, C]
 
@@ -176,17 +188,15 @@ class SaveVideoFFV1:
             frame_img.save(os.path.join(smol_dir, f"{base_name}{suffix}.png"))
 
         if create_mp4:
-            # Return ui dict so ComfyUI recognizes this as a saved asset
-            # Point to the smol mp4 as the generated asset
-            mp4_filename = f"{base_name}.mp4"
-            mp4_subfolder = os.path.relpath(smol_dir, output_dir)
-            video_mp4_path = os.path.join(smol_dir, mp4_filename)
+            # MP4 was created directly, return it as both paths
+            mp4_filename = os.path.basename(video_path)
+            mp4_subfolder = os.path.relpath(os.path.dirname(video_path), output_dir)
 
             return {
                 "ui": {
                     "video": [mp4_filename, mp4_subfolder],
                 },
-                "result": (video_path, last_frame, video_mp4_path, frame_24_before_last),
+                "result": (video_path, last_frame, video_path, frame_24_before_last),
             }
         else:
             return {
