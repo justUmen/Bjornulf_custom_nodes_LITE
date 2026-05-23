@@ -73,6 +73,7 @@ from .send_null_same_as_disconnected import ConditionalNull
 from .wait import WaitingNode
 from .audio_fix_2_channels import AudioChannelFixer
 from .run_workflow_API import ApiDynamicTextInputsv2
+from .json_parser import JsonParser
 
 NODE_CLASS_MAPPINGS = {
     "Bjornulf_AudioChannelFixer": AudioChannelFixer,
@@ -171,7 +172,8 @@ NODE_CLASS_MAPPINGS = {
     "Bjornulf_LoopFloat": LoopFloat,
     "Bjornulf_LoopInteger": LoopInteger,
     "Bjornulf_LoopBasicBatch": LoopBasicBatch,
-    "Bjornulf_ApiDynamicTextInputsv2": ApiDynamicTextInputsv2
+    "Bjornulf_ApiDynamicTextInputsv2": ApiDynamicTextInputsv2,
+    "Bjornulf_JsonParser": JsonParser
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -416,6 +418,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Bjornulf_IfElse": "🔀 If-Else (input / compare_with)",
     "Bjornulf_ImageDetails": "🖼🔍 Image Details",
     "Bjornulf_CombineImages": "🖼🔗 Combine Images",
+    "Bjornulf_JsonParser": "📋🔑 JSON Parser (Get Value)",
 }
 
 
